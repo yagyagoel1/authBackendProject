@@ -2,11 +2,18 @@ const express =require("express");
 const router = express.Router();
 const zod = require("zod");
 const {createNewUser,authenticateUser} = require("./controller") 
+const auth  = require("../../middlewares/auth")
 
 //zod input schema
 const nameSchema = zod.string().min(2).max(50);
 const emailSchema = zod.string().email();
 const passwordSchema = zod.string().min(8);
+
+
+//protected route
+router.get("/private_data",auth,(req,res)=>{
+    res.status(200).send(`youre in the private territory of ${req.currentUser.email}`);
+})
 //signup route of user
 router.post("/signup",async(req,res)=>{
     try {
