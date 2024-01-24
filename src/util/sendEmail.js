@@ -1,11 +1,14 @@
 const nodemailer = require("nodemailer");
- const {AUTH_EMAIL,AUTH_PASS}=process.env;
+ const AUTH_EMAIL=process.env.AUTH_EMAIL;
+ const AUTH_PASS = process.env.AUTH_PASS;
 
 
 
 //creating transporter
 let transporter = nodemailer.createTransport({
     host : "smtp-mail.outlook.com",
+   
+
     auth : {
         user : AUTH_EMAIL,
         pass : AUTH_PASS,
@@ -15,6 +18,7 @@ let transporter = nodemailer.createTransport({
 
 //verifiying transporter
 transporter.verify((error,success)=>{
+    console.log("hello")
     if(error)
     {
         console.log(error);
@@ -25,12 +29,15 @@ transporter.verify((error,success)=>{
     }
 
 })
-const sendEmail =  async (mailOptions) => {
-    try {
-        await transporter.sendMail(mailOptions);
-        return ;
-    } catch (error) {
-        throw error;
-    }
+const sendEmail = async (mailOptions) => {
+    return new Promise((resolve, reject) => {
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(info);
+            }
+        });
+    });
 };
 module.exports = sendEmail;
