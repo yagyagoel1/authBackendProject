@@ -3,7 +3,7 @@ const router = express.Router();
 const zod = require("zod");
 const {createNewUser,authenticateUser} = require("./controller") 
 const auth  = require("../../middlewares/auth")
-
+const {sendVerificationOTPEmail} = require("./../email_verification/controller");
 //zod input schema
 const nameSchema = zod.string().min(2).max(50);
 const emailSchema = zod.string().email();
@@ -30,7 +30,7 @@ router.post("/signup",async(req,res)=>{
         }
         
         const result =await createNewUser({name:name,email:email,password:password});
-        
+        await sendVerificationOTPEmail(email);
         res.status(200).json({msg : "created user"});
     } catch (error) {
         res.status(400).json({msg : error.message});

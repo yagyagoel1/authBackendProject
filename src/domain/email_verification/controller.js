@@ -29,6 +29,10 @@ const verifyUserEmail = async ({email,otp})=>{
         {
             throw Error("invalid coe passed check your inbox");
         }
+        //update the user record to show verified 
+        await User.updateOne({email},{
+            verified : true,
+        });
         await deleteOTP(email);
         return ;
     } catch (error) {

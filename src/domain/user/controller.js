@@ -36,6 +36,10 @@ const authenticateUser  = async (data)=>{
         {
             throw Error("invalid credentials");
         }
+        if(!fetchedUser.verified)
+        {
+            throw Error("your email has nnot been verified");
+        }
         const hashedPassword= fetchedUser.password;
         const checkPassword = verifyUserPassword(password,hashedPassword); 
         if(!checkPassword)
