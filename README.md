@@ -1,6 +1,6 @@
 # authBackendProject
 
-this project will cover and include:
+## This project will cover and include:
 
 * User login and Signup  
 * Request Authorization using JWT
