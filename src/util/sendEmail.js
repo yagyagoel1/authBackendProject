@@ -6,9 +6,9 @@ const nodemailer = require("nodemailer");
 
 //creating transporter
 let transporter = nodemailer.createTransport({
-    host : "smtp-mail.outlook.com",
-   
-
+    host : "smtp.gmail.com",
+    port : 465,
+    secure : true,
     auth : {
         user : AUTH_EMAIL,
         pass : AUTH_PASS,
