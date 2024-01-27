@@ -9,5 +9,6 @@ this project will cover and include:
 * Password Reset using OTP
 
 
-future scope 
-integrate a better auth
+## future scope 
+* make the send email work better
+* add frontend 
