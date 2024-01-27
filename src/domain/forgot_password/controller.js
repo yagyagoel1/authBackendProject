@@ -1,5 +1,32 @@
 const User =require("./../user/model")
-const {sendOTP} =require("./../otp/controller")
+const {sendOTP,verifyOTP,deleteOTP} =require("./../otp/controller")
+const {passwordSchema} = require("./../../util/inputcheck");
+const {hashedData} = require("./../../util/HashData");
+
+
+
+//reset password
+const resetUserPassword = async ({email,otp,newPassword})=>{
+    try {
+        const validOTP = await verifyOTP({email,otp});
+        if(!validOTP)
+        {
+            throw Error("invalid otp");
+        }
+        newPassword = passwordSchema.safeParse(newPassword);
+        if(newPassword.error)
+        {
+            throw Error("invalid password");
+        }
+        const newHashedPass = await hashedData(newPassword);
+        await User.updateOne({email},{password : newHashedPass});
+        await deleteOTP(email);
+       
+
+    } catch (error) {
+        throw error;
+    }
+}
 const sendPasswordOTPEmail =async (email) =>{
 try {
     //check if the user exist in the systm
@@ -23,4 +50,4 @@ try {
     throw error;
 }}
 
-module.exports = {sendPasswordOTPEmail};
+module.exports = {sendPasswordOTPEmail,resetUserPassword};

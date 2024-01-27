@@ -1,8 +1,23 @@
 const express =  require("express");
 
-const { sendPasswordOTPEmail } = require("./controller");
+const { sendPasswordOTPEmail ,resetUserPassword} = require("./controller");
 const router = express.Router();
 
+
+//cre
+router.post("/reset",async(req,res)=>{
+    try {
+        let {email,otp,newPassword} =res.body;
+        if(!otp&&email&&newPassword)
+        {
+            throw Error("empty credentials are not allowed");
+        }
+        await resetUserPassword({email,otp,newPassword});
+        res.status(200).json({msg : "password reset successfully"});
+    } catch (error) {
+        res.status(400),json(error.message);
+    }
+});
 //password reset req 
 router.post("/",async(req,res)=>{
     try{

@@ -1,14 +1,9 @@
 const express =require("express");
 const router = express.Router();
-const zod = require("zod");
+const {emailSchema,passwordSchema,nameSchema} = require("./../../util/inputcheck");
 const {createNewUser,authenticateUser} = require("./controller") 
 const auth  = require("../../middlewares/auth")
 const {sendVerificationOTPEmail} = require("./../email_verification/controller");
-//zod input schema
-const nameSchema = zod.string().min(2).max(50);
-const emailSchema = zod.string().email();
-const passwordSchema = zod.string().min(8);
-
 
 //protected route
 router.get("/private_data",auth,(req,res)=>{
