@@ -7,3 +7,7 @@ this project will cover and include:
 * One Time Pin System OTP
 * Email Verification usig OTP
 * Password Reset using OTP
+
+
+future scope 
+integrate a better auth
