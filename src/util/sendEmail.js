@@ -6,9 +6,7 @@ const nodemailer = require("nodemailer");
 
 //creating transporter
 let transporter = nodemailer.createTransport({
-    host : "smtp.gmail.com",
-    port : 465,
-    secure : true,
+    host : "smtp-mail.outlook.com",
     auth : {
         user : AUTH_EMAIL,
         pass : AUTH_PASS,
@@ -31,7 +29,7 @@ transporter.verify((error,success)=>{
 })
 const sendEmail = async (mailOptions) => {
     return new Promise((resolve, reject) => {
-        transporter.sendMail(mailOptions, (error, info) => {
+        transporter.sendMail({from : AUTH_EMAIL,...mailOptions}, (error, info) => {
             if (error) {
                 reject(error);
             } else {

@@ -6,7 +6,7 @@ router.post("/",async (req,res)=>{
     try {
         const {email} =req.body;
         if(!email) 
-        throw Error("emailnot foound ");
+        throw Error("email not found ");
        const createdEmailVerificationOTP =await sendVerificationOTPEmail(email);
        res.status(200).json(createdEmailVerificationOTP)
     } catch (error) {

@@ -10,7 +10,7 @@ const sendVerificationOTPEmail = async (email)=>{
 
         }
         const otpDetails = {
-            email,
+            to : email,
             subject : "Email verification ",
             message : "Verify your email with code below",
             duration : 1,
